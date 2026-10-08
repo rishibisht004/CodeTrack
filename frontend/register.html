@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | CodeTrack</title>
+
+    <link rel="icon" type="image/png" href="assets/CodeTrack.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/authGuard.js"></script>
+
+</head>
+
+<body class="auth-page">
+
+    <div class="auth-container">
+
+        <!-- LEFT SIDE -->
+
+        <div class="auth-brand">
+
+            <a href="index.html" class="auth-logo">
+
+                <img
+                    src="assets/CodeTrack.png"
+                    alt="CodeTrack"
+                >
+
+                <span>CodeTrack</span>
+
+            </a>
+
+
+            <div class="auth-brand-content">
+
+                <span class="auth-badge">
+                    START YOUR JOURNEY
+                </span>
+
+
+                <h1>
+                    Turn your coding
+                    <span>weakness into strength.</span>
+                </h1>
+
+
+                <p>
+                    Create your CodeTrack account and start
+                    understanding your real programming skill level.
+                </p>
+
+
+                <div class="auth-features">
+
+                    <div class="auth-feature">
+
+                        <div class="feature-icon">
+                            01
+                        </div>
+
+                        <div>
+                            <strong>Choose Your Course</strong>
+                            <span>
+                                Start with C or Python
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="auth-feature">
+
+                        <div class="feature-icon">
+                            02
+                        </div>
+
+                        <div>
+                            <strong>Take AI Assessment</strong>
+                            <span>
+                                Questions generated dynamically
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="auth-feature">
+
+                        <div class="feature-icon">
+                            03
+                        </div>
+
+                        <div>
+                            <strong>Improve Your Skills</strong>
+                            <span>
+                                Follow your personalized plan
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="auth-brand-footer">
+
+                © 2026 CodeTrack
+
+            </div>
+
+        </div>
+
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="auth-form-section">
+
+            <div class="auth-form-box">
+
+                <div class="mobile-auth-logo">
+
+                    <img
+                        src="assets/CodeTrack.png"
+                        alt="CodeTrack"
+                    >
+
+                    <span>CodeTrack</span>
+
+                </div>
+
+
+                <div class="auth-heading">
+
+                    <h2>Create your account</h2>
+
+                    <p>
+                        Start your personalized coding journey.
+                    </p>
+
+                </div>
+
+
+                <form id="registerForm">
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="registerName">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="registerName"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="registerEmail">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="registerEmail"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="registerPassword">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="registerPassword"
+                            placeholder="Create a password"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Confirm your password"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div id="registerMessage" class="auth-message"></div>
+
+
+                    <button
+                        type="submit"
+                        class="auth-submit-btn"
+                    >
+                        Create Account
+                    </button>
+
+                </form>
+
+
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+
+
+                <p class="auth-switch">
+
+                    Already have an account?
+
+                    <a href="login.html">
+                        Login
+                    </a>
+
+                </p>
+
+
+                <a href="index.html" class="back-home">
+                    ← Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="js/auth.js"></script>
+
+</body>
+</html>

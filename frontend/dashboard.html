@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | CodeTrack</title>
+
+    <link rel="icon" type="image/png" href="assets/CodeTrack.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/authGuard.js"></script>
+
+    <style> 
+        /* ==========================================
+   ASSESSMENT HISTORY
+========================================== */
+
+.history-section {
+    margin-top: 40px;
+}
+
+.history-card {
+    background: rgba(255, 255, 255, 0.90);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border-radius: 18px;
+    padding: 20px 24px;
+
+    margin-bottom: 14px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.06);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.history-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.10);
+}
+
+
+.history-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.history-course {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+
+.history-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #f3e8ff;
+
+    font-size: 24px;
+}
+
+
+.history-course h3 {
+    margin: 0 0 5px;
+
+    color: #202238;
+
+    font-size: 17px;
+}
+
+
+.history-course p {
+    margin: 0;
+
+    color: #777;
+
+    font-size: 13px;
+}
+
+
+.history-score {
+    text-align: right;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+
+.history-score strong {
+    font-size: 24px;
+
+    color: #7c3aed;
+}
+
+
+.history-score span {
+    font-size: 13px;
+
+    color: #777;
+}
+
+
+.history-bottom {
+    display: flex;
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 15px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid #eee;
+}
+
+
+.history-status {
+    font-size: 12px;
+
+    font-weight: 700;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+}
+
+
+.history-strong {
+    color: #15803d;
+    background: #dcfce7;
+}
+
+
+.history-practice {
+    color: #b45309;
+    background: #fef3c7;
+}
+
+
+.history-weak {
+    color: #b91c1c;
+    background: #fee2e2;
+}
+
+
+.history-index {
+    font-size: 12px;
+
+    color: #888;
+}
+
+
+.history-empty {
+    background: rgba(255, 255, 255, 0.90);
+
+    border-radius: 18px;
+
+    padding: 40px 20px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+
+.history-empty-icon {
+    font-size: 42px;
+
+    margin-bottom: 10px;
+}
+
+
+.history-empty h3 {
+    color: #202238;
+
+    margin-bottom: 8px;
+}
+
+
+.history-empty p {
+    color: #777;
+
+    max-width: 450px;
+
+    margin: auto;
+
+    line-height: 1.6;
+}
+
+
+.history-more {
+    text-align: center;
+
+    color: #777;
+
+    font-size: 13px;
+
+    margin-top: 15px;
+}
+
+
+@media (max-width: 600px) {
+
+    .history-main {
+        align-items: flex-start;
+    }
+
+    .history-score strong {
+        font-size: 20px;
+    }
+
+    .history-course h3 {
+        font-size: 15px;
+    }
+
+}
+    </style>
+
+</head>
+
+<body class="dashboard-page">
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="dashboard-nav">
+
+        <a href="index.html" class="dashboard-logo">
+
+            <img
+                src="assets/CodeTrack.png"
+                alt="CodeTrack"
+            >
+
+            <span>CodeTrack</span>
+
+        </a>
+
+
+        <div class="dashboard-nav-right">
+
+            <div class="user-info">
+
+                <div class="user-avatar" id="userAvatar">
+                    U
+                </div>
+
+                <div class="user-details">
+
+                    <strong id="userName">
+                        User
+                    </strong>
+
+                    <span id="userEmail">
+                        user@email.com
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="logout-btn"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="dashboard-container">
+
+
+        <!-- WELCOME -->
+
+        <section class="dashboard-welcome">
+
+            <div>
+
+                <span class="dashboard-label">
+                    YOUR LEARNING DASHBOARD
+                </span>
+
+                <h1>
+                    Welcome back,
+                    <span id="welcomeName">
+                        Student
+                    </span> 👋
+                </h1>
+
+                <p>
+                    Choose a programming language and start your
+                    AI-powered skill assessment.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= STATS ================= -->
+
+        <section class="dashboard-stats">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📝
+                </div>
+
+                <div>
+
+                    <span>
+                        Assessments
+                    </span>
+
+                    <strong id="assessmentCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🎯
+                </div>
+
+                <div>
+
+                    <span>
+                        Average Score
+                    </span>
+
+                    <strong id="averageScore">
+                        0%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📈
+                </div>
+
+                <div>
+
+                    <span>
+                        Progress
+                    </span>
+
+                    <strong id="progressStatus">
+                        Start
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================= COURSE SECTION ================= -->
+
+        <section class="course-selection">
+
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="dashboard-label">
+                        ASSESSMENT
+                    </span>
+
+                    <h2>
+                        Choose your programming course
+                    </h2>
+
+                    <p>
+                        CodeTrack will generate a fresh assessment
+                        using AI based on your selected language.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="dashboard-courses">
+
+
+                <!-- C -->
+
+                <div class="dashboard-course-card">
+
+                    <div class="course-card-top">
+
+                        <div class="course-logo c-logo">
+
+                            <img
+                                src="assets/c.png"
+                                alt="C Programming"
+                            >
+
+                        </div>
+
+                        <span class="course-status">
+                            Available
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        C Programming
+                    </h3>
+
+
+                    <p>
+                        Test your understanding of variables,
+                        conditions, loops, functions, arrays,
+                        pointers and more.
+                    </p>
+
+
+                    <div class="course-topics">
+
+                        <span>Variables</span>
+                        <span>Loops</span>
+                        <span>Functions</span>
+                        <span>Arrays</span>
+
+                    </div>
+
+
+                    <button
+                        class="course-start-btn"
+                        onclick="startAssessment('C')"
+                    >
+
+                        Start C Assessment
+
+                        <span>→</span>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- PYTHON -->
+
+                <div class="dashboard-course-card">
+
+                    <div class="course-card-top">
+
+                        <div class="course-logo python-logo">
+
+                            <img
+                                src="assets/python.png"
+                                alt="Python"
+                            >
+
+                        </div>
+
+                        <span class="course-status">
+                            Available
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        Python Programming
+                    </h3>
+
+
+                    <p>
+                        Evaluate your Python fundamentals including
+                        variables, conditions, loops, functions,
+                        lists, dictionaries and more.
+                    </p>
+
+
+                    <div class="course-topics">
+
+                        <span>Variables</span>
+                        <span>Loops</span>
+                        <span>Functions</span>
+                        <span>Lists</span>
+
+                    </div>
+
+
+                    <button
+                        class="course-start-btn"
+                        onclick="startAssessment('Python')"
+                    >
+
+                        Start Python Assessment
+
+                        <span>→</span>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- COMING SOON -->
+
+                <div class="dashboard-course-card coming-soon-card">
+
+                    <div class="course-card-top">
+
+                        <div class="course-logo placeholder-logo">
+                            C++
+                        </div>
+
+                        <span class="course-status coming">
+                            Coming Soon
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        C++ Programming
+                    </h3>
+
+
+                    <p>
+                        C++ skill assessment with topic-wise
+                        analysis and personalized learning plan.
+                    </p>
+
+
+                    <div class="course-topics">
+
+                        <span>OOP</span>
+                        <span>STL</span>
+                        <span>Arrays</span>
+                        <span>DSA</span>
+
+                    </div>
+
+
+                    <button
+                        class="course-start-btn disabled-btn"
+                        disabled
+                    >
+
+                        Coming Soon
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+     ASSESSMENT HISTORY
+========================================== -->
+
+<section class="dashboard-section history-section">
+
+    <div class="section-heading">
+        <div>
+            <span class="dashboard-label">YOUR ACTIVITY</span>
+            <h2>Assessment History</h2>
+        </div>
+    </div>
+
+    <div id="assessmentHistory">
+
+        <div class="history-empty">
+            <div class="history-empty-icon">📝</div>
+            <h3>No assessments yet</h3>
+            <p>
+                Complete your first assessment to see
+                your performance history here.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+        <!-- ================= HOW IT WORKS ================= -->
+
+        <section class="dashboard-how">
+
+            <div class="section-heading">
+
+                <span class="dashboard-label">
+                
+                    HOW CODETRACK WORKS
+                </span>
+
+                <h2>
+                    Your skill improvement journey
+                </h2>
+
+            </div>
+
+
+            <div class="journey-grid">
+
+
+                <div class="journey-step">
+
+                    <span>01</span>
+
+                    <h3>
+                        AI Assessment
+                    </h3>
+
+                    <p>
+                        AI dynamically creates questions
+                        according to the selected course.
+                    </p>
+
+                </div>
+
+
+                <div class="journey-step">
+
+                    <span>02</span>
+
+                    <h3>
+                        Performance Analysis
+                    </h3>
+
+                    <p>
+                        Your answers are analyzed topic by topic
+                        to identify your skill gaps.
+                    </p>
+
+                </div>
+
+
+                <div class="journey-step">
+
+                    <span>03</span>
+
+                    <h3>
+                        Personalized Plan
+                    </h3>
+
+                    <p>
+                        CodeTrack recommends what you should
+                        learn and practice next.
+                    </p>
+
+                </div>
+
+
+                <div class="journey-step">
+
+                    <span>04</span>
+
+                    <h3>
+                        Retest & Improve
+                    </h3>
+
+                    <p>
+                        Take another assessment and track
+                        your improvement over time.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

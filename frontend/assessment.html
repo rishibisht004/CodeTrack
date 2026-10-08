@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Assessment | CodeTrack</title>
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="assets/CodeTrack.png"
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Protect assessment page -->
+    <script src="js/authGuard.js"></script>
+
+</head>
+
+
+<body class="assessment-page">
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="assessment-nav">
+
+        <a href="dashboard.html" class="assessment-logo">
+
+            <img
+                src="assets/CodeTrack.png"
+                alt="CodeTrack"
+            >
+
+            <span>CodeTrack</span>
+
+        </a>
+
+
+        <div class="assessment-nav-info">
+
+            <span id="courseName">
+                Assessment
+            </span>
+
+            <span class="nav-divider">
+                |
+            </span>
+
+            <span id="questionCounter">
+                0 / 0
+            </span>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================= LOADING ================= -->
+
+    <section
+        id="loadingScreen"
+        class="assessment-loading"
+    >
+
+        <div class="loading-spinner"></div>
+
+        <h2>
+            Creating your assessment...
+        </h2>
+
+        <p>
+            CodeTrack AI is preparing questions based on your
+            selected programming language.
+        </p>
+
+        <div class="loading-points">
+
+            <span>Analyzing course</span>
+            <span>Generating questions</span>
+            <span>Balancing difficulty</span>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= ERROR ================= -->
+
+    <section
+        id="errorScreen"
+        class="assessment-error hidden"
+    >
+
+        <div class="error-icon">
+            !
+        </div>
+
+        <h2>
+            Unable to create assessment
+        </h2>
+
+        <p id="errorMessage">
+            Something went wrong while generating your assessment.
+        </p>
+
+        <div class="error-actions">
+
+            <button
+                class="assessment-secondary-btn"
+                onclick="goToDashboard()"
+            >
+                ← Dashboard
+            </button>
+
+            <button
+                class="assessment-primary-btn"
+                onclick="generateAssessment()"
+            >
+                Try Again
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= ASSESSMENT ================= -->
+
+    <main
+        id="assessmentScreen"
+        class="assessment-container hidden"
+    >
+
+
+        <!-- TOP INFO -->
+
+        <div class="assessment-top">
+
+
+            <div>
+
+                <span
+                    class="assessment-label"
+                    id="assessmentCourseLabel"
+                >
+                    C PROGRAMMING
+                </span>
+
+                <h1>
+                    Skill Assessment
+                </h1>
+
+                <p>
+                    Answer each question carefully.
+                    Your performance will be analyzed topic-wise.
+                </p>
+
+            </div>
+
+
+            <div class="assessment-score-info">
+
+                <span>
+                    Progress
+                </span>
+
+                <strong id="progressText">
+                    0%
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PROGRESS BAR -->
+
+        <div class="assessment-progress">
+
+            <div
+                id="progressBar"
+                class="assessment-progress-fill"
+            ></div>
+
+        </div>
+
+
+
+        <!-- QUESTION CARD -->
+
+        <section class="question-card">
+
+
+            <div class="question-meta">
+
+                <div>
+
+                    <span
+                        id="questionType"
+                        class="question-type"
+                    >
+                        THEORY
+                    </span>
+
+                    <span
+                        id="questionTopic"
+                        class="question-topic"
+                    >
+                        Variables
+                    </span>
+
+                </div>
+
+
+                <span
+                    id="questionDifficulty"
+                    class="question-difficulty"
+                >
+                    Medium
+                </span>
+
+            </div>
+
+
+
+            <div class="question-number">
+
+                Question
+                <span id="currentQuestionNumber">
+                    1
+                </span>
+
+            </div>
+
+
+
+            <h2
+                id="questionText"
+                class="question-text"
+            >
+                Loading question...
+            </h2>
+
+
+
+            <!-- THEORY -->
+
+            <div
+                id="optionsContainer"
+                class="options-container"
+            ></div>
+
+
+
+            <!-- PROGRAMMING -->
+
+            <div
+                id="codingContainer"
+                class="coding-container hidden"
+            >
+
+                <div class="coding-header">
+
+                    <span>
+                        Your Answer
+                    </span>
+
+                    <span id="codingLanguage">
+                        C
+                    </span>
+
+                </div>
+
+
+                <textarea
+                    id="codeAnswer"
+                    class="code-answer"
+                    placeholder="// Write your code here..."
+                    spellcheck="false"
+                ></textarea>
+
+
+                <div class="coding-hint">
+                    Write your solution clearly. Your answer will
+                    be evaluated after submission.
+                </div>
+
+            </div>
+
+
+
+            <!-- NAVIGATION -->
+
+            <div class="question-navigation">
+
+
+                <button
+                    id="previousBtn"
+                    class="assessment-secondary-btn"
+                    onclick="previousQuestion()"
+                >
+                    ← Previous
+                </button>
+
+
+                <div class="question-dots" id="questionDots"></div>
+
+
+                <button
+                    id="nextBtn"
+                    class="assessment-primary-btn"
+                    onclick="nextQuestion()"
+                >
+                    Next →
+                </button>
+
+
+                <button
+                    id="submitBtn"
+                    class="assessment-submit-btn hidden"
+                    onclick="submitAssessment()"
+                >
+                    Submit Assessment
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- INFORMATION -->
+
+        <div class="assessment-info">
+
+            <div class="info-item">
+
+                <span class="info-icon">
+                    🤖
+                </span>
+
+                <div>
+
+                    <strong>
+                        AI Generated
+                    </strong>
+
+                    <span>
+                        Questions are dynamically generated.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span class="info-icon">
+                    🎯
+                </span>
+
+                <div>
+
+                    <strong>
+                        Topic Analysis
+                    </strong>
+
+                    <span>
+                        Each question is mapped to a skill topic.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span class="info-icon">
+                    📊
+                </span>
+
+                <div>
+
+                    <strong>
+                        Personalized Results
+                    </strong>
+
+                    <span>
+                        Your weak areas will be identified.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+
+
+    <!-- ================= SUBMIT LOADING ================= -->
+
+    <div
+        id="submitLoading"
+        class="submit-loading hidden"
+    >
+
+        <div class="loading-spinner"></div>
+
+        <h2>
+            Analyzing your performance...
+        </h2>
+
+        <p>
+            CodeTrack AI is evaluating your answers and identifying
+            your strengths and skill gaps.
+        </p>
+
+    </div>
+
+
+
+    <script src="js/assessment.js"></script>
+
+</body>
+
+</html>
