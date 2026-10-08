@@ -7,7 +7,7 @@
 // Later production deployment mein isko
 // deployed backend URL se replace karenge.
 
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "https://codetrack-backend-zkb2.onrender.com";
 
 
 // ==========================================
